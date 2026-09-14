@@ -20,6 +20,10 @@ application = Application.builder().token(TOKEN).updater(None).build()
 
 app = Flask(__name__)
 
+# Crear un event loop global (solución al error "Event loop is closed")
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 # ============================
 # CARGAR HOTELES
 # ============================
@@ -104,7 +108,10 @@ application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_m
 @app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
-    asyncio.run(application.process_update(update))
+
+    # Usar el loop global en lugar de asyncio.run()
+    loop.run_until_complete(application.process_update(update))
+
     return "ok"
 
 @app.route("/", methods=["GET"])
@@ -115,7 +122,7 @@ def health():
 # INICIALIZAR PTB
 # ============================
 
-asyncio.run(application.initialize())
+loop.run_until_complete(application.initialize())
 
 # ============================
 # LEVANTAR FLASK EN RENDER
