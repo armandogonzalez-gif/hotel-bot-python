@@ -2,10 +2,12 @@ import json
 import os
 import asyncio
 from fastapi import FastAPI, Request
-from scraper import extract_price
 
 from telegram import Bot, Update
 from telegram.ext import Application, MessageHandler, filters
+
+from scraper import extract_price
+
 
 # ============================
 # CONFIGURACIÓN DEL BOT
@@ -20,12 +22,14 @@ application = Application.builder().token(TOKEN).updater(None).build()
 # FastAPI app
 app = FastAPI()
 
+
 # ============================
 # CARGAR HOTELES
 # ============================
 
 with open("hotels.json", "r") as f:
     HOTELS = json.load(f)
+
 
 # ============================
 # FORMATEAR RESPUESTA
@@ -67,6 +71,7 @@ def format_response(hotel_name, prices):
 
     return msg
 
+
 # ============================
 # HANDLER PRINCIPAL
 # ============================
@@ -81,10 +86,10 @@ async def handle_message(update: Update, context):
     urls = HOTELS[hotel]
     prices = {}
 
-    # Obtener el loop correcto del worker ASGI
+    # Obtener el event loop correcto del worker ASGI
     loop = asyncio.get_running_loop()
 
-    # Ejecutar extract_price() en thread pool sin bloquear
+    # Ejecutar extract_price() en thread pool (Playwright)
     for ota, url in urls.items():
         if url:
             prices[ota] = await loop.run_in_executor(None, extract_price, url)
@@ -98,8 +103,10 @@ async def handle_message(update: Update, context):
 
     await update.message.reply_text(msg)
 
+
 # Registrar handler
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
 
 # ============================
 # WEBHOOK
@@ -112,9 +119,11 @@ async def webhook(request: Request):
     await application.process_update(update)
     return {"status": "ok"}
 
+
 @app.get("/")
 async def health():
     return {"status": "ok"}
+
 
 # ============================
 # INICIALIZAR PTB
