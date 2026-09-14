@@ -109,14 +109,18 @@ application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_m
 
 
 # ============================
-# WEBHOOK
+# WEBHOOK (NO BLOQUEA)
 # ============================
 
 @app.post("/")
 async def webhook(request: Request):
     data = await request.json()
     update = Update.de_json(data, bot)
-    await application.process_update(update)
+
+    # Enviar el update a la cola interna de PTB (no bloquear el webhook)
+    await application.update_queue.put(update)
+
+    # Responder inmediatamente a Telegram
     return {"status": "ok"}
 
 
@@ -132,3 +136,4 @@ async def health():
 @app.on_event("startup")
 async def startup_event():
     await application.initialize()
+    await application.start()   # <-- IMPORTANTE
