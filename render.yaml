@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: hotel-bot-python
+    env: docker
+    plan: starter
+    dockerfilePath: Dockerfile
+    autoDeploy: true
