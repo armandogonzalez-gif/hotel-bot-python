@@ -78,15 +78,15 @@ async def handle_message(update: Update, context):
 # Registrar handler
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-@app.route("/", methods=["GET"])
-def health():
-    return "ok", 200
-
 @app.route("/", methods=["POST"])
 async def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
     await application.process_update(update)
     return "ok"
+    
+@app.route("/", methods=["GET"])
+def health():
+    return "ok", 200
 
 if __name__ == "__main__":
     app.run()
