@@ -22,7 +22,7 @@ def extract_price(url: str) -> str:
             # Navegar a la URL
             page.goto(url, timeout=60000, wait_until="networkidle")
 
-            # Expedia usa este selector para mostrar el precio
+            # Selector estándar de Expedia
             selector = "span[data-stid='price-lockup-text']"
 
             # Esperar a que aparezca el precio
