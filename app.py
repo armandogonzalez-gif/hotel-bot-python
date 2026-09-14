@@ -83,9 +83,9 @@ def health():
     return "ok", 200
 
 @app.route("/", methods=["POST"])
-def webhook():
+async def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
-    application.process_update(update)
+    await application.process_update(update)
     return "ok"
 
 if __name__ == "__main__":
