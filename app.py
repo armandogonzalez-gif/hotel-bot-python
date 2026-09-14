@@ -8,9 +8,11 @@ from telegram.ext import Application, MessageHandler, filters
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
-# Crear bot y aplicación (PTB 20+)
+# Crear bot
 bot = Bot(token=TOKEN)
-application = Application.builder().token(TOKEN).build()
+
+# Crear aplicación PTB sin Updater
+application = Application.builder().token(TOKEN).updater(None).build()
 
 app = Flask(__name__)
 
