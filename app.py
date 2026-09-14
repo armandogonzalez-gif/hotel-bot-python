@@ -88,6 +88,10 @@ async def handle_message(update: Update, context):
             prices[ota] = "No disponible"
 
     msg = format_response(hotel, prices)
+
+    # 🔥 Limitar tamaño para evitar error "Text is too long"
+    msg = msg[:4000]
+
     await update.message.reply_text(msg)
 
 # Registrar handler
