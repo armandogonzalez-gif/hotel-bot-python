@@ -12,7 +12,6 @@ from telegram.ext import Application, MessageHandler, filters
 # ============================
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
-
 bot = Bot(token=TOKEN)
 
 # Crear aplicación PTB sin Updater (modo webhook)
@@ -121,5 +120,6 @@ async def health():
 # INICIALIZAR PTB
 # ============================
 
-# Inicializar PTB usando el loop del worker ASGI
-asyncio.get_event_loop().run_until_complete(application.initialize())
+@app.on_event("startup")
+async def startup_event():
+    await application.initialize()
