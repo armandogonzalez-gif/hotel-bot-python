@@ -21,10 +21,6 @@ application = Application.builder().token(TOKEN).updater(None).build()
 # FastAPI app
 app = FastAPI()
 
-# Crear un event loop global (solución al error "no current event loop")
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-
 # ============================
 # CARGAR HOTELES
 # ============================
@@ -86,7 +82,10 @@ async def handle_message(update: Update, context):
     urls = HOTELS[hotel]
     prices = {}
 
-    # Ejecutar extract_price() en thread pool
+    # Obtener el loop correcto del worker ASGI
+    loop = asyncio.get_running_loop()
+
+    # Ejecutar extract_price() en thread pool sin bloquear
     for ota, url in urls.items():
         if url:
             prices[ota] = await loop.run_in_executor(None, extract_price, url)
@@ -122,4 +121,5 @@ async def health():
 # INICIALIZAR PTB
 # ============================
 
-loop.run_until_complete(application.initialize())
+# Inicializar PTB usando el loop del worker ASGI
+asyncio.get_event_loop().run_until_complete(application.initialize())
