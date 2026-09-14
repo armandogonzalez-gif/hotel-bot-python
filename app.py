@@ -21,8 +21,9 @@ application = Application.builder().token(TOKEN).updater(None).build()
 # FastAPI app
 app = FastAPI()
 
-# Event loop global (ASGI usa uno solo)
-loop = asyncio.get_event_loop()
+# Crear un event loop global (solución al error "no current event loop")
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 # ============================
 # CARGAR HOTELES
