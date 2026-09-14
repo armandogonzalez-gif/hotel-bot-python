@@ -20,7 +20,7 @@ application = Application.builder().token(TOKEN).updater(None).build()
 
 app = Flask(__name__)
 
-# Crear un event loop global (solución al error "Event loop is closed")
+# Crear un event loop global
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 
@@ -85,15 +85,16 @@ async def handle_message(update: Update, context):
     urls = HOTELS[hotel]
     prices = {}
 
+    # Ejecutar extract_price() en un thread para evitar bloqueos
     for ota, url in urls.items():
         if url:
-            prices[ota] = extract_price(url)
+            prices[ota] = await loop.run_in_executor(None, extract_price, url)
         else:
             prices[ota] = "No disponible"
 
     msg = format_response(hotel, prices)
 
-    # 🔥 Limitar tamaño para evitar error "Text is too long"
+    # Limitar tamaño para evitar error "Text is too long"
     msg = msg[:4000]
 
     await update.message.reply_text(msg)
@@ -108,10 +109,7 @@ application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_m
 @app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
-
-    # Usar el loop global en lugar de asyncio.run()
     loop.run_until_complete(application.process_update(update))
-
     return "ok"
 
 @app.route("/", methods=["GET"])
