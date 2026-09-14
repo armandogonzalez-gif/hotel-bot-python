@@ -90,8 +90,6 @@ def webhook():
 def health():
     return "ok", 200
 
-import asyncio
-
 # Inicializar PTB antes de recibir cualquier update
 asyncio.run(application.initialize())
 asyncio.run(application.start())
@@ -105,9 +103,7 @@ def webhook():
 @app.route("/", methods=["GET"])
 def health():
     return "ok", 200
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
-
-if __name__ == "__main__":
-    
