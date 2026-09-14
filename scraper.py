@@ -1,18 +1,29 @@
-import requests
-from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 def extract_price(url):
     try:
-        html = requests.get(url, timeout=10).text
-        soup = BeautifulSoup(html, "html.parser")
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            context = browser.new_context(
+                user_agent=(
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/120.0.0.0 Safari/537.36"
+                ),
+                locale="es-MX",
+                java_script_enabled=True
+            )
 
-        # Busca cualquier texto con símbolo $
-        price = None
-        for tag in soup.find_all(text=True):
-            if "$" in tag:
-                price = tag.strip()
-                break
+            page = context.new_page()
+            page.goto(url, timeout=60000)
 
-        return price if price else "No encontrado"
-    except:
-        return "Error"
+            # Esperar a que cargue el precio
+            page.wait_for_selector("span[data-stid='price-lockup-text']", timeout=60000)
+
+            price = page.query_selector("span[data-stid='price-lockup-text']").inner_text()
+
+            browser.close()
+            return price
+
+    except Exception as e:
+        return f"Error: {e}"
