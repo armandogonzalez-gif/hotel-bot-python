@@ -2,14 +2,19 @@ import json
 import os
 from flask import Flask, request
 from scraper import extract_price
+
 from telegram import Bot, Update
-from telegram.ext import Dispatcher, MessageHandler, Filters
+from telegram.ext import Application, MessageHandler, filters
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+# Telegram bot (versión 20+)
 bot = Bot(token=TOKEN)
+application = Application.builder().token(TOKEN).build()
 
 app = Flask(__name__)
 
+# Cargar hoteles
 with open("hotels.json", "r") as f:
     HOTELS = json.load(f)
 
@@ -49,11 +54,11 @@ def format_response(hotel_name, prices):
 
     return msg
 
-def handle_message(update, context):
+async def handle_message(update: Update, context):
     hotel = update.message.text.strip()
 
     if hotel not in HOTELS:
-        update.message.reply_text("Hotel no encontrado.")
+        await update.message.reply_text("Hotel no encontrado.")
         return
 
     urls = HOTELS[hotel]
@@ -66,14 +71,15 @@ def handle_message(update, context):
             prices[ota] = "No disponible"
 
     msg = format_response(hotel, prices)
-    update.message.reply_text(msg)
+    await update.message.reply_text(msg)
+
+# Registrar handler
+application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 @app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
-    dispatcher = Dispatcher(bot, None, workers=0)
-    dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
-    dispatcher.process_update(update)
+    application.process_update(update)
     return "ok"
 
 if __name__ == "__main__":
