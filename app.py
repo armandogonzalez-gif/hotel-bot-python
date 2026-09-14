@@ -94,6 +94,17 @@ import asyncio
 
 # Inicializar PTB antes de recibir cualquier update
 asyncio.run(application.initialize())
+asyncio.run(application.start())
+
+@app.route("/", methods=["POST"])
+def webhook():
+    update = Update.de_json(request.get_json(force=True), bot)
+    asyncio.run(application.process_update(update))
+    return "ok"
+
+@app.route("/", methods=["GET"])
+def health():
+    return "ok", 200
 
 if __name__ == "__main__":
     app.run()
