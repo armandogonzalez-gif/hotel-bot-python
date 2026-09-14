@@ -1,24 +1,35 @@
 import json
 import os
+import asyncio
 from flask import Flask, request
 from scraper import extract_price
 
 from telegram import Bot, Update
 from telegram.ext import Application, MessageHandler, filters
 
+# ============================
+# CONFIGURACIÓN DEL BOT
+# ============================
+
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
-# Crear bot
 bot = Bot(token=TOKEN)
 
-# Crear aplicación PTB sin Updater
+# Crear aplicación PTB sin Updater (modo webhook)
 application = Application.builder().token(TOKEN).updater(None).build()
 
 app = Flask(__name__)
 
-# Cargar hoteles
+# ============================
+# CARGAR HOTELES
+# ============================
+
 with open("hotels.json", "r") as f:
     HOTELS = json.load(f)
+
+# ============================
+# FORMATEAR RESPUESTA
+# ============================
 
 def format_response(hotel_name, prices):
     motor_price = prices["motor"]
@@ -56,6 +67,10 @@ def format_response(hotel_name, prices):
 
     return msg
 
+# ============================
+# HANDLER PRINCIPAL
+# ============================
+
 async def handle_message(update: Update, context):
     hotel = update.message.text.strip()
 
@@ -78,31 +93,29 @@ async def handle_message(update: Update, context):
 # Registrar handler
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-import asyncio
+# ============================
+# WEBHOOK
+# ============================
 
 @app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
     asyncio.run(application.process_update(update))
     return "ok"
-    
+
 @app.route("/", methods=["GET"])
 def health():
     return "ok", 200
 
-# Inicializar PTB antes de recibir cualquier update
+# ============================
+# INICIALIZAR PTB
+# ============================
+
 asyncio.run(application.initialize())
-asyncio.run(application.start())
 
-@app.route("/", methods=["POST"])
-def webhook():
-    update = Update.de_json(request.get_json(force=True), bot)
-    asyncio.run(application.process_update(update))
-    return "ok"
-
-@app.route("/", methods=["GET"])
-def health():
-    return "ok", 200
+# ============================
+# LEVANTAR FLASK EN RENDER
+# ============================
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
