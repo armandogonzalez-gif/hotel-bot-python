@@ -8,7 +8,7 @@ from telegram.ext import Application, MessageHandler, filters
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
-# Telegram bot (versión 20+)
+# Crear bot y aplicación (PTB 20+)
 bot = Bot(token=TOKEN)
 application = Application.builder().token(TOKEN).build()
 
