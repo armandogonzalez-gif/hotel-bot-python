@@ -1,37 +1,41 @@
 {
   "Presidente Acapulco": {
     "motor": "https://www.elpresidenteacapulco.com/el-presidente-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Hotel-El-Presidente-Acapulco.h7157.Informacion-Hotel?chkin=2026-10-15&chkout=2026-10-20",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/249553/2026-10-15/2026-10-20/2",
-    "bestday": "https://www.bestday.com.mx/accommodations/results/CIT_49/2026-10-15/2026-10-20/2",
-    "agoda": "https://www.agoda.com/es-es/el-presidente-acapulco_4/hotel/acapulco-mx.html?checkIn=2026-10-15"
+    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Hotel-El-Presidente-Acapulco.h7157.Informacion-Hotel",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/249553",
+    "bestday": "https://www.bestday.com.mx/accommodations/results/CIT_49",
+    "agoda": "https://www.agoda.com/es-es/el-presidente-acapulco_4/hotel/acapulco-mx.html"
   },
+
   "Real Bananas": {
     "motor": "https://www.realbananas.com/real-bananas-aca-todo-incluido/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Real-Bananas-Hotel-All-Inclusive.h67659971.Informacion-Hotel?chkin=2026-10-15&chkout=2026-10-20",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/249772/2026-10-15/2026-10-18/2",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/249772/2026-10-15/2026-10-20/2",
-    "agoda": "https://www.agoda.com/es-es/real-bananas-all-inclusive_5/hotel/all/acapulco-mx.html?checkIn=2026-10-15"
+    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Real-Bananas-Hotel-All-Inclusive.h67659971.Informacion-Hotel",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/249772",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/249772",
+    "agoda": "https://www.agoda.com/es-es/real-bananas-all-inclusive_5/hotel/all/acapulco-mx.html"
   },
+
   "Princess Mundo Imperial": {
     "motor": "https://paquetes.mundoimperial.com/princess-mundo-imperial-riviera-diamante-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Princess-Mundo-Imperial.h12592270.Informacion-Hotel?chkin=2026-10-15&chkout=2026-10-20",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/312445/2026-10-15/2026-10-18/2",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/312445/2026-10-15/2026-10-20/2",
-    "agoda": "https://www.agoda.com/es-es/princess-mundo-imperial-riviera-diamante-acapulco/hotel/acapulco-mx.html?checkIn=2026-10-15"
+    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Princess-Mundo-Imperial.h12592270.Informacion-Hotel",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/312445",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/312445",
+    "agoda": "https://www.agoda.com/es-es/princess-mundo-imperial-riviera-diamante-acapulco/hotel/acapulco-mx.html"
   },
+
   "Bnow": {
     "motor": "https://www.hotelsntssbnow.com/bnow-hotels-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-SNTSS-By-Bnow-Hotels.h57916226.Informacion-Hotel?chkin=2026-10-15&chkout=2026-10-20",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/4615488/2026-10-15/2026-10-20/2",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/4615488/2026-10-15/2026-10-20/2",
-    "agoda": "https://www.agoda.com/es-es/bnow-hotels-acapulco-h60632140/hotel/acapulco-mx.html?checkIn=2026-10-15"
+    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-SNTSS-By-Bnow-Hotels.h57916226.Informacion-Hotel",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/4615488",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/4615488",
+    "agoda": "https://www.agoda.com/es-es/bnow-hotels-acapulco-h60632140/hotel/acapulco-mx.html"
   },
+
   "Playa Suites": {
     "motor": "https://www.playasuites.com.mx/playa-suites-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Playa-Suites.h1397726.Informacion-Hotel?chkin=2026-10-15&chkout=2026-10-20",
+    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Playa-Suites.h1397726.Informacion-Hotel",
     "despegar": "",
     "bestday": "",
-    "agoda": "https://www.agoda.com/es-es/playa-suites-acapulco-h15509310/hotel/acapulco-mx.html?checkIn=2026-10-15"
+    "agoda": "https://www.agoda.com/es-es/playa-suites-acapulco-h15509310/hotel/acapulco-mx.html"
   }
 }
