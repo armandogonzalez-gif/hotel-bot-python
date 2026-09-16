@@ -1,6 +1,12 @@
 from playwright.sync_api import sync_playwright
+import re
 
 def extract_price(url: str) -> str:
+    """
+    Extrae el precio desde cualquier OTA usando Playwright.
+    Incluye fallback para diferentes selectores.
+    """
+
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
@@ -17,16 +23,49 @@ def extract_price(url: str) -> str:
 
             page = context.new_page()
 
-            page.goto(url, timeout=60000, wait_until="networkidle")
+            # Navegar a la URL
+            page.goto(url, timeout=90000, wait_until="networkidle")
 
-            selector = "span[data-stid='price-lockup-text']"
+            # ============================
+            # SELECTORES POSIBLES
+            # ============================
 
-            page.wait_for_selector(selector, timeout=60000)
+            selectors = [
+                "span[data-stid='price-lockup-text']",          # Expedia
+                ".price",                                       # PriceTravel
+                ".amount",                                      # PriceTravel alt
+                ".hotel-price",                                 # Despegar
+                ".price-amount",                                # Bestday
+                "span.price",                                   # Genérico
+                "div.price",                                    # Genérico
+            ]
 
-            price = page.query_selector(selector).inner_text()
+            # Intentar cada selector
+            for selector in selectors:
+                try:
+                    page.wait_for_selector(selector, timeout=5000)
+                    price = page.query_selector(selector).inner_text().strip()
+                    if price:
+                        browser.close()
+                        return price
+                except:
+                    pass
+
+            # ============================
+            # FALLBACK: buscar texto con $
+            # ============================
+
+            try:
+                html = page.content()
+                match = re.search(r"\$[\s0-9,.]+", html)
+                if match:
+                    browser.close()
+                    return match.group().strip()
+            except:
+                pass
 
             browser.close()
-            return price
+            return "No encontrado"
 
     except Exception as e:
         return f"Error: {e}"
