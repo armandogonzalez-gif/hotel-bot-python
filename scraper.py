@@ -1,84 +1,152 @@
-from playwright.sync_api import sync_playwright
+import requests
 import re
-import time
 
-def extract_price(url: str) -> str:
+# ============================
+# EXPEDIA API
+# ============================
+
+def expedia_price(hotel_id, checkin, checkout):
     try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            context = browser.new_context(
-                user_agent=(
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/120.0.0.0 Safari/537.36"
-                ),
-                locale="es-MX",
-                java_script_enabled=True
-            )
+        url = (
+            f"https://www.expedia.com/api/express/hotels/{hotel_id}/price?"
+            f"checkIn={checkin}&checkOut={checkout}&adults=2&rooms=1&currency=MXN"
+        )
 
-            page = context.new_page()
-            page.goto(url, timeout=120000, wait_until="domcontentloaded")
+        r = requests.get(url, timeout=20)
+        data = r.json()
 
-            # ============================
-            # SELECTORES POR OTA
-            # ============================
-
-            OTA_SELECTORS = [
-                # MOTOR (mundo imperial, bananas, bnow, playa suites)
-                "span.price",
-                "div.price",
-                "span.amount",
-                "div.amount",
-
-                # EXPEDIA GO
-                "span[data-stid='price-summary']",
-                "span[data-stid='price-lockup-text']",
-                "span.uitk-text.uitk-type-600",
-
-                # DESPEGAR
-                "span.price-text",
-                "span.amount-value",
-                "span.price-tag-fare",
-
-                # BESTDAY
-                "span.price",
-                "span.amount",
-                "div.price-amount",
-
-                # PRICETRAVEL
-                "span.price",
-                "span.amount",
-                "div.price",
-                "div.amount"
-            ]
-
-            # Intentar cada selector
-            for selector in OTA_SELECTORS:
-                try:
-                    page.wait_for_selector(selector, timeout=5000)
-                    price = page.query_selector(selector).inner_text().strip()
-
-                    # Validar que sea un precio real
-                    if "$" in price:
-                        browser.close()
-                        return price
-                except:
-                    pass
-
-            # ============================
-            # FALLBACK: buscar texto con $
-            # ============================
-            try:
-                html = page.content()
-                match = re.search(r"\$[\s0-9,.]+", html)
-                if match:
-                    browser.close()
-                    return match.group().strip()
-            except:
-                pass
-
-            browser.close()
-            return "No encontrado"
+        price = data.get("price", {}).get("totalPrice", None)
+        if price:
+            return f"${price}"
+        return "No encontrado"
 
     except Exception as e:
         return f"Error: {e}"
+
+
+# ============================
+# DESPEGAR API (GraphQL)
+# ============================
+
+def despegar_price(hotel_id, checkin, checkout):
+    try:
+        url = "https://www.despegar.com.mx/graphql"
+
+        payload = {
+            "query": """
+            query HotelPrice($hotelId: String!, $checkin: String!, $checkout: String!) {
+              hotel(id: $hotelId) {
+                price(checkin: $checkin, checkout: $checkout, rooms: 1, adults: 2) {
+                  amount
+                }
+              }
+            }
+            """,
+            "variables": {
+                "hotelId": hotel_id,
+                "checkin": checkin,
+                "checkout": checkout
+            }
+        }
+
+        r = requests.post(url, json=payload, timeout=20)
+        data = r.json()
+
+        price = data["data"]["hotel"]["price"]["amount"]
+        return f"${price}"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+# ============================
+# BESTDAY API
+# ============================
+
+def bestday_price(hotel_id, checkin, checkout):
+    try:
+        url = (
+            f"https://www.bestday.com.mx/api/hotel/price?"
+            f"id={hotel_id}&checkIn={checkin}&checkOut={checkout}&adults=2&rooms=1"
+        )
+
+        r = requests.get(url, timeout=20)
+        data = r.json()
+
+        price = data.get("price", {}).get("total", None)
+        if price:
+            return f"${price}"
+
+        return "No encontrado"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+# ============================
+# MOTORES (Real Bananas, Mundo Imperial, Bnow, Playa Suites)
+# ============================
+
+def motor_price(api_url):
+    try:
+        r = requests.get(api_url, timeout=20)
+        data = r.json()
+
+        # Buscar cualquier campo que contenga precio
+        for key, value in data.items():
+            if "price" in key.lower() or "amount" in key.lower():
+                return f"${value}"
+
+        return "No encontrado"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+# ============================
+# PRICETRAVEL (HTML)
+# ============================
+
+def pricetravel_price(url):
+    try:
+        r = requests.get(url, timeout=20)
+        html = r.text
+
+        match = re.search(r"\$[\s0-9,.]+", html)
+        if match:
+            return match.group().strip()
+
+        return "No encontrado"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+# ============================
+# INTEGRADOR GENERAL
+# ============================
+
+def extract_price(ota, url, hotel_id=None, checkin=None, checkout=None):
+    """
+    ota: expedia | despegar | bestday | motor | pricetravel
+    url: deeplink o API URL
+    hotel_id: ID de la OTA
+    checkin/checkout: YYYY-MM-DD
+    """
+
+    if ota == "expedia":
+        return expedia_price(hotel_id, checkin, checkout)
+
+    if ota == "despegar":
+        return despegar_price(hotel_id, checkin, checkout)
+
+    if ota == "bestday":
+        return bestday_price(hotel_id, checkin, checkout)
+
+    if ota == "motor":
+        return motor_price(url)
+
+    if ota == "pricetravel":
+        return pricetravel_price(url)
+
+    return "No encontrado"
