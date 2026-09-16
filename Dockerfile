@@ -1,4 +1,3 @@
-# Imagen base ligera de Python
 FROM python:3.10-slim
 
 # ============================
@@ -31,13 +30,23 @@ RUN apt-get update && apt-get install -y \
     libu2f-udev \
     libvulkan1 \
     xdg-utils \
+    libpango-1.0-0 \
+    libcairo2 \
+    libgdk-pixbuf2.0-0 \
+    libxkbcommon0 \
+    libxshmfence1 \
+    libxau6 \
+    libxdmcp6 \
+    libxinerama1 \
+    libxcursor1 \
+    libxi6 \
     && rm -rf /var/lib/apt/lists/*
 
 # ============================
 # Instalar Playwright + Chromium
 # ============================
 RUN pip install playwright
-RUN python -m playwright install chromium
+RUN playwright install --with-deps chromium
 
 # ============================
 # Copiar archivos del proyecto
@@ -58,4 +67,4 @@ EXPOSE 10000
 # ============================
 # Comando de inicio
 # ============================
-CMD ["gunicorn", "app:app", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:10000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "10000"]
