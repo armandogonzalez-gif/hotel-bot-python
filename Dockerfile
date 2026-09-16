@@ -1,9 +1,12 @@
-FROM python:3.10-slim
+FROM ubuntu:22.04
 
 # ============================
-# Dependencias del sistema para Chromium
+# Instalar Python + dependencias
 # ============================
 RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
     wget \
     gnupg \
     ca-certificates \
