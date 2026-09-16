@@ -1,41 +1,41 @@
 {
   "Presidente Acapulco": {
-    "motor": "https://www.elpresidenteacapulco.com/el-presidente-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Hotel-El-Presidente-Acapulco.h7157.Informacion-Hotel",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/249553",
-    "bestday": "https://www.bestday.com.mx/accommodations/results/CIT_49",
-    "agoda": "https://www.agoda.com/es-es/el-presidente-acapulco_4/hotel/acapulco-mx.html"
+    "motor": "https://www.elpresidenteacapulco.com/hoteles?placeId=53862&pURI=acapulco&placeType=6&IsQuote=true&actionType=1&Rooms=1&CheckIn={checkin_slash}&CheckOut={checkout_slash}&room0.Adults=2&room0.Kids=0&room0.AgeKids%5B0%5D=-1",
+    "expedia": "https://www.expedia.com/go/hotel/info/7157/{checkin_dash}/{checkout_dash}?HotID=7157&NumRoom=1&NumAdult-Room1=2&top_cur=MXN",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/249553/{checkin_dash}/{checkout_dash}/2?from=SB2&facet=hotel&chosen_accommodation=933145&clt_c=PROMOS-MX-H&clt_pr=H&clt_af=PROMOS&clt_cc=MX&clt_pa_pub=TEST",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/249553/{checkin_dash}/{checkout_dash}/2?from=SB2&facet=hotel&chosen_accommodation=933145&clt_c=PROMOS-MX-H&clt_pr=H&clt_af=PROMOS&clt_cc=MX&clt_pa_pub=TEST",
+    "pricetravel": "https://www.pricetravel.com/es/hotel/hotel-el-presidente-acapulco_a100903?adults=2&checkin={checkin_dash}&checkout={checkout_dash}&group_adults=2&no_rooms=1"
   },
 
   "Real Bananas": {
-    "motor": "https://www.realbananas.com/real-bananas-aca-todo-incluido/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Real-Bananas-Hotel-All-Inclusive.h67659971.Informacion-Hotel",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/249772",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/249772",
-    "agoda": "https://www.agoda.com/es-es/real-bananas-all-inclusive_5/hotel/all/acapulco-mx.html"
+    "motor": "https://www.realbananas.com/QuoteFromHotelWidget?MappingType=2&Hotel.Route.Origin.Date={checkin_slash}&Hotel.Route.Destination.Date={checkout_slash}&Hotel.Pax%5B0%5D.Adults=2&Hotel.Pax%5B0%5D.Kids=0&Hotel.Pax%5B0%5D.KidAges%5B0%5D=-1&IsPackage=false&ActionType=4&Hotel.Rooms=1&HotelId=100137",
+    "expedia": "https://www.expedia.com/go/hotel/info/67659971/{checkin_dash}/{checkout_dash}?HotID=67659971&NumRoom=1&NumAdult-Room1=2&top_cur=MXN",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/249772/{checkin_dash}/{checkout_dash}/2?from=SB2&facet=hotel&chosen_accommodation=933145",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/249772/{checkin_dash}/{checkout_dash}/2?from=SB2&facet=hotel&chosen_accommodation=933145",
+    "pricetravel": "https://www.pricetravel.com/es/hotel/real-bananas-aca-todo-incluido_a100137?adults=2&checkin={checkin_dash}&checkout={checkout_dash}&group_adults=2&no_rooms=1"
   },
 
   "Princess Mundo Imperial": {
-    "motor": "https://paquetes.mundoimperial.com/princess-mundo-imperial-riviera-diamante-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Princess-Mundo-Imperial.h12592270.Informacion-Hotel",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/312445",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/312445",
-    "agoda": "https://www.agoda.com/es-es/princess-mundo-imperial-riviera-diamante-acapulco/hotel/acapulco-mx.html"
+    "motor": "https://paquetes.mundoimperial.com/QuoteFromHotelWidget?MappingType=2&Hotel.Route.Origin.Date={checkin_slash}&Hotel.Route.Destination.Date={checkout_slash}&Hotel.Pax%5B0%5D.Adults=2&Hotel.Pax%5B0%5D.Kids=0&Hotel.Pax%5B0%5D.KidAges%5B0%5D=-1&IsPackage=false&ActionType=4&Hotel.Rooms=1&HotelId=101212",
+    "expedia": "https://www.expedia.com/go/hotel/info/12592270/{checkin_dash}/{checkout_dash}?HotID=12592270&NumRoom=1&NumAdult-Room1=2&top_cur=MXN",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/312445/{checkin_dash}/{checkout_dash}/2",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/312445/{checkin_dash}/{checkout_dash}/2",
+    "pricetravel": "https://www.pricetravel.com/es/hotel/princess-mundo-imperial-riviera-diamante-acapulco_a101212?adults=2&checkin={checkin_dash}&checkout={checkout_dash}&group_adults=2&no_rooms=1"
   },
 
   "Bnow": {
-    "motor": "https://www.hotelsntssbnow.com/bnow-hotels-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-SNTSS-By-Bnow-Hotels.h57916226.Informacion-Hotel",
-    "despegar": "https://www.despegar.com.mx/accommodations/detail/4615488",
-    "bestday": "https://www.bestday.com.mx/accommodations/detail/4615488",
-    "agoda": "https://www.agoda.com/es-es/bnow-hotels-acapulco-h60632140/hotel/acapulco-mx.html"
+    "motor": "https://www.hotelsntssbnow.com/QuoteFromHotelWidget?MappingType=2&Hotel.Route.Origin.Date={checkin_slash}&Hotel.Route.Destination.Date={checkout_slash}&Hotel.Pax%5B0%5D.Adults=2&Hotel.Pax%5B0%5D.Kids=0&Hotel.Pax%5B0%5D.KidAges%5B0%5D=-1&IsPackage=false&ActionType=4&Hotel.Rooms=1&HotelId=425958",
+    "expedia": "https://www.expedia.com/go/hotel/info/57916226/{checkin_dash}/{checkout_dash}?HotID=57916226&NumRoom=1&NumAdult-Room1=2&top_cur=MXN",
+    "despegar": "https://www.despegar.com.mx/accommodations/detail/4615488/{checkin_dash}/{checkout_dash}/2",
+    "bestday": "https://www.bestday.com.mx/accommodations/detail/4615488/{checkin_dash}/{checkout_dash}/2",
+    "pricetravel": "https://www.pricetravel.com/es/hotel/bnow-hotels-acapulco_a425958?adults=2&checkin={checkin_dash}&checkout={checkout_dash}&group_adults=2&no_rooms=1"
   },
 
   "Playa Suites": {
-    "motor": "https://www.playasuites.com.mx/playa-suites-acapulco/habitaciones",
-    "expedia": "https://www.expedia.mx/Acapulco-Hoteles-Playa-Suites.h1397726.Informacion-Hotel",
+    "motor": "https://www.playasuites.com.mx/QuoteFromHotelWidget?MappingType=2&Hotel.Route.Origin.Date={checkin_slash}&Hotel.Route.Destination.Date={checkout_slash}&Hotel.Pax%5B0%5D.Adults=2&Hotel.Pax%5B0%5D.Kids=0&Hotel.Pax%5B0%5D.KidAges%5B0%5D=-1&IsPackage=false&ActionType=4&Hotel.Rooms=1&HotelId=100468",
+    "expedia": "https://www.expedia.com/go/hotel/info/1397726/{checkin_dash}/{checkout_dash}?HotID=1397726&NumRoom=1&NumAdult-Room1=2&top_cur=MXN",
     "despegar": "",
     "bestday": "",
-    "agoda": "https://www.agoda.com/es-es/playa-suites-acapulco-h15509310/hotel/acapulco-mx.html"
+    "pricetravel": "https://www.pricetravel.com/es/hotel/playa-suites-acapulco_a100468?adults=2&checkin={checkin_dash}&checkout={checkout_dash}&group_adults=2&no_rooms=1"
   }
 }
