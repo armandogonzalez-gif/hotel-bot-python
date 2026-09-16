@@ -1,48 +1,45 @@
 FROM python:3.10-slim
 
 # ============================
-# Instalar dependencias del sistema para Chromium (Playwright)
+# Dependencias del sistema para Chromium
 # ============================
 RUN apt-get update && apt-get install -y \
-    libnss3 \
-    libatk1.0-0 \
+    wget \
+    gnupg \
+    ca-certificates \
+    fonts-liberation \
+    libasound2 \
     libatk-bridge2.0-0 \
+    libatk1.0-0 \
     libcups2 \
+    libdbus-1-3 \
     libdrm2 \
-    libxkbcommon0 \
+    libgbm1 \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libx11-6 \
     libxcomposite1 \
     libxdamage1 \
     libxfixes3 \
     libxrandr2 \
-    libgbm1 \
-    libasound2 \
-    libpangocairo-1.0-0 \
-    libpango-1.0-0 \
-    libcairo2 \
-    libatspi2.0-0 \
-    libgtk-3-0 \
-    libx11-xcb1 \
-    libxext6 \
-    libx11-6 \
+    libxrender1 \
     libxss1 \
     libxtst6 \
-    libglib2.0-0 \
-    libxrender1 \
+    libu2f-udev \
+    libvulkan1 \
+    xdg-utils \
+    libpango-1.0-0 \
+    libcairo2 \
+    libxkbcommon0 \
     libxshmfence1 \
     libxau6 \
     libxdmcp6 \
     libxinerama1 \
     libxcursor1 \
     libxi6 \
-    xdg-utils \
-    wget \
     && rm -rf /var/lib/apt/lists/*
-
-# ============================
-# Instalar Playwright + Chromium
-# ============================
-RUN pip install playwright
-RUN playwright install --with-deps chromium
 
 # ============================
 # Copiar proyecto
@@ -54,6 +51,12 @@ COPY . .
 # Instalar dependencias Python
 # ============================
 RUN pip install --no-cache-dir -r requirements.txt
+
+# ============================
+# Instalar Playwright + Chromium
+# ============================
+RUN pip install playwright
+RUN playwright install --with-deps chromium
 
 # ============================
 # Exponer puerto
